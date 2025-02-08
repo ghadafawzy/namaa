@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'dart:ui'as ui;
 
 class UserFormPage extends StatefulWidget {
   @override
@@ -76,20 +77,27 @@ class _UserFormPageState extends State<UserFormPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset("assets/splash-photo.jpg"),
-                TextFormField(
-                  controller: _nameController,
-                  decoration: InputDecoration(labelText: 'اسم الطفل',
-                  alignLabelWithHint: true,),
-                  //textDirection: TextDirection.RTL as TextDirection?,
-                  textAlign: TextAlign.right,
-                  validator: (value) => value!.isEmpty ? 'يرجى إدخال اسم الطفل' : null,
+                Directionality(
+                  textDirection: ui.TextDirection.rtl,
+                  child: TextFormField(
+                    controller: _nameController,
+                    decoration: InputDecoration(labelText: 'اسم الطفل',
+                    alignLabelWithHint: true,),
+                    textAlign: TextAlign.right,
+                    validator: (value) => value!.isEmpty ? 'يرجى إدخال اسم الطفل' : null,
+                  ),
                 ),
                 SizedBox(height: 16),
-                TextFormField(
-                  controller: _phoneController,
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(labelText: 'رقم الهاتف'),
-                  validator: (value) => value!.isEmpty ? 'يرجى إدخال رقم الهاتف' : null,
+                Directionality(
+                  textDirection: ui.TextDirection.rtl,
+                  child: TextFormField(
+                    controller: _phoneController,
+                    keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(labelText: 'رقم الهاتف',
+                      alignLabelWithHint: true,),
+                    textAlign: TextAlign.right,
+                    validator: (value) => value!.isEmpty ? 'يرجى إدخال رقم الهاتف' : null,
+                  ),
                 ),
                 SizedBox(height: 16),
 
@@ -97,15 +105,20 @@ class _UserFormPageState extends State<UserFormPage> {
                 GestureDetector(
                   onTap: _pickDate,
                   child: AbsorbPointer(
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'تاريخ ميلاد الطفل',
-                        hintText: _selectedDate == null
-                            ? 'اضغط لاختيار التاريخ'
-                            : DateFormat('yyyy-MM-dd').format(_selectedDate!),
+                    child: Directionality(
+                      textDirection: ui.TextDirection.rtl,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'تاريخ ميلاد الطفل',
+                          alignLabelWithHint: true,
+                          hintText: _selectedDate == null
+                              ? 'اضغط لاختيار التاريخ'
+                              : DateFormat('yyyy-MM-dd').format(_selectedDate!),
+                        ),
+                        textAlign: TextAlign.right,
+                        validator: (value) =>
+                        _selectedDate == null ? 'يرجى اختيار تاريخ الميلاد' : null,
                       ),
-                      validator: (value) =>
-                      _selectedDate == null ? 'يرجى اختيار تاريخ الميلاد' : null,
                     ),
                   ),
                 ),
